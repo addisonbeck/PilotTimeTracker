@@ -1,0 +1,31 @@
+<ng-container *ngFor="let requestGroup of requestGroups">
+  <mat-card>
+    <div class="icon">
+      <mat-icon aria-hidden="false" aria-label="airplane" [color]="primary"
+        >airplanemode_active</mat-icon
+      >
+    </div>
+    <div class="request-date">
+      <div class="value">
+        {{ requestGroup.requests[0].date | date: "fullDate" }}
+      </div>
+      <div class="label">PTO</div>
+    </div>
+    <div class="date-requested">
+      <div class="label">Date Requested</div>
+      <div class="value">
+        {{ requestGroup.dateRequested | date: "fullDate" }}
+      </div>
+    </div>
+    <div class="manager">
+      <div class="label">Manager</div>
+      <div class="value">{{ requestGroup.managerId }}</div>
+    </div>
+    <div class="hours">
+      <div class="value">{{ requestGroup.requests[0].hours }} hours</div>
+    </div>
+    <div class="status">
+      <div class="value">{{ requestGroup.status | lowercase }}</div>
+    </div>
+  </mat-card>
+</ng-container>
