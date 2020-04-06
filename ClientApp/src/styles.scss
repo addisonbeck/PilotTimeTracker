@@ -8,6 +8,13 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+a {
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
 .w-100 {
   width: 100%;
 }

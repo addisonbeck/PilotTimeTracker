@@ -10,6 +10,7 @@ import { HomeComponent } from "./home/home.component";
 import { RequestGridComponent } from "./request-grid/request-grid.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "./material-module";
+import { RequestComponent } from "./request/request.component";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MaterialModule } from "./material-module";
     NavMenuComponent,
     HomeComponent,
     RequestGridComponent,
+    RequestComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -30,6 +32,10 @@ import { MaterialModule } from "./material-module";
           import("./manager-view/manager-view.module").then(
             (m) => m.ManagerViewModule
           ),
+      },
+      {
+        path: "request",
+        component: RequestComponent,
       },
     ]),
     BrowserAnimationsModule,
