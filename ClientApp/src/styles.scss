@@ -18,3 +18,13 @@ a {
 .w-100 {
   width: 100%;
 }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1740px;
+  }
+}
+
+.text-right {
+  text-align: right;
+}

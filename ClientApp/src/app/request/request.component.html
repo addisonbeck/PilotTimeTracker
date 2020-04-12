@@ -1,13 +1,66 @@
-<mat-form-field>
-  <mat-label>Start Date</mat-label>
-  <input matInput [matDatepicker]="start" [formControl]="startDate" />
-  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-  <mat-datepicker #start disabled="false"></mat-datepicker>
-</mat-form-field>
-
-<mat-form-field>
-  <mat-label>End Date</mat-label>
-  <input matInput [matDatepicker]="end" [formControl]="endDate" />
-  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-  <mat-datepicker #end disabled="false"></mat-datepicker>
-</mat-form-field>
+<div class="app-container" [formGroup]="form">
+  <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="dateRangeGroup">
+      <form [formGroup]="dateRangeGroup">
+        <ng-template matStepLabel>Select a date range</ng-template>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Choose a date range"
+            [satDatepicker]="picker"
+            [matDatepickerFilter]="dateFilter"
+            formControlName="dateRange"
+          />
+          <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+          <sat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></sat-datepicker-toggle>
+          <mat-error *ngIf="dateRange.errors">{{
+            dateRangeErrorMessage
+          }}</mat-error>
+        </mat-form-field>
+        <div class="text-right">
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="requestsGroup">
+      <ng-template matStepLabel>Choose hours for each day</ng-template>
+      <form [formGroup]="requestsGroup">
+        <div class="request-days-container" formArrayName="requests">
+          <div *ngFor="let request of requests.controls; let i = index">
+            <div [formGroupName]="i">
+              <mat-form-field class="request-day">
+                <input
+                  matInput
+                  placeholder="{{
+                    request.get('date').value | date: 'fullDate'
+                  }}"
+                  formControlName="hours"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <mat-error
+            *ngIf="requests.touched && requests.errors?.atLeastOneRequired"
+            >At least one required</mat-error
+          >
+        </div>
+        <div class="text-right">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Review request</ng-template>
+      <pre>{{ jsonForm }}</pre>
+      <div class="text-right">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Submit Request</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+  <button mat-button (click)="logForm()">Log Form</button>
+</div>
