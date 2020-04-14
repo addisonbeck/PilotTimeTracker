@@ -1,31 +1,68 @@
-<ng-container *ngFor="let requestGroup of requestGroups">
-  <mat-card>
-    <div class="icon">
-      <mat-icon aria-hidden="false" aria-label="airplane" [color]="primary"
-        >airplanemode_active</mat-icon
-      >
-    </div>
-    <div class="request-date">
-      <div class="value">
-        {{ requestGroup.requests[0].date | date: "fullDate" }}
-      </div>
-      <div class="label">PTO</div>
-    </div>
-    <div class="date-requested">
-      <div class="label">Date Requested</div>
-      <div class="value">
-        {{ requestGroup.dateRequested | date: "fullDate" }}
-      </div>
-    </div>
-    <div class="manager">
-      <div class="label">Manager</div>
-      <div class="value">{{ requestGroup.managerId }}</div>
-    </div>
-    <div class="hours">
-      <div class="value">{{ requestGroup.requests[0].hours }} hours</div>
-    </div>
-    <div class="status">
-      <div class="value">{{ requestGroup.status | lowercase }}</div>
-    </div>
-  </mat-card>
+<ng-container *ngIf="!managerView; else managerViewGrid">
+  <ng-container *ngFor="let requestGroup of requestGroups">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <div class="icon">
+          <mat-icon aria-hidden="false" aria-label="airplane" [color]="primary"
+            >airplanemode_active</mat-icon
+          >
+        </div>
+        <div class="request-date">
+          <div class="value">
+            {{ requestGroup.requests[0].date | date: "fullDate" }}
+          </div>
+          <div class="label">PTO</div>
+        </div>
+        <div class="date-requested">
+          <div class="label">Date Requested</div>
+          <div class="value">
+            {{ requestGroup.dateRequested | date: "fullDate" }}
+          </div>
+        </div>
+        <div class="manager">
+          <div class="label">Manager</div>
+          <div class="value">{{ requestGroup.managerId }}</div>
+        </div>
+        <div class="hours">
+          <div class="value">{{ requestGroup.requests[0].hours }} hours</div>
+        </div>
+        <div class="status">
+          <div class="value">{{ requestGroup.status | lowercase }}</div>
+        </div>
+      </mat-expansion-panel-header>
+      <app-request-preview></app-request-preview>
+    </mat-expansion-panel>
+  </ng-container>
 </ng-container>
+<ng-template #managerViewGrid>
+  <ng-container *ngFor="let requestGroup of requestGroups">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <div class="icon">
+          <mat-icon aria-hidden="false" aria-label="airplane" [color]="primary"
+            >priority_high</mat-icon
+          >
+        </div>
+        <div class="request-date">
+          <div class="value">
+            {{ requestGroup.userId }}
+          </div>
+          <div class="label">John Doe</div>
+        </div>
+        <div class="date-requested">
+          <div class="label">Requested Days</div>
+          <div class="value">
+            {{ calculateRequestedDate(requestGroup) }}
+          </div>
+        </div>
+        <div class="hours">
+          <div class="value">{{ requestGroup.requests[0].hours }} hours</div>
+        </div>
+        <div class="status">
+          <div class="value">{{ requestGroup.status | lowercase }}</div>
+        </div>
+      </mat-expansion-panel-header>
+      <app-request-preview></app-request-preview>
+    </mat-expansion-panel>
+  </ng-container>
+</ng-template>

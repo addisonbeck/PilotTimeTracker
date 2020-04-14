@@ -7,7 +7,7 @@ export const mockUser: User = {
   lastName: "Beck",
   requestGroups: [
     {
-      id: 1,
+      id: "1",
       dateRequested: new Date(),
       status: RequestStatus.Pending,
       userId: 1,
@@ -16,17 +16,17 @@ export const mockUser: User = {
         {
           date: new Date(),
           hours: 4,
-          requestGroupId: 1,
+          requestGroupId: "1",
         },
         {
           date: new Date(),
           hours: 6,
-          requestGroupId: 1,
+          requestGroupId: "1",
         },
       ],
     },
     {
-      id: 2,
+      id: "2",
       dateRequested: new Date(),
       status: RequestStatus.Pending,
       userId: 1,
@@ -35,12 +35,12 @@ export const mockUser: User = {
         {
           date: new Date(),
           hours: 4,
-          requestGroupId: 2,
+          requestGroupId: "2",
         },
         {
           date: new Date(),
           hours: 6,
-          requestGroupId: 2,
+          requestGroupId: "2",
         },
       ],
     },

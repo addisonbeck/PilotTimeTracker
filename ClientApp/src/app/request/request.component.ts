@@ -10,6 +10,7 @@ import {
 } from "@angular/forms";
 
 import { Request } from "src/app/models/request";
+import { Guid } from "guid-typescript";
 
 @Component({
   selector: "app-request",
@@ -19,6 +20,7 @@ import { Request } from "src/app/models/request";
 export class RequestComponent implements OnInit {
   form: FormGroup;
   dateFilter = (date: Date) => date.getDay() == 0;
+  private requestGroupGuid: string = Guid.raw();
 
   get dateRangeGroup() {
     return this.form.get("dateRangeGroup");
@@ -68,7 +70,7 @@ export class RequestComponent implements OnInit {
           this.dateRange.value.begin.getTime() + 1000 * 60 * 60 * 24 * i
         ),
         hours: 0,
-        requestGroupId: 0,
+        requestGroupId: this.requestGroupGuid,
       };
 
       const group = this.fb.group(request);
@@ -110,6 +112,7 @@ export class RequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
+      id: this.requestGroupGuid,
       dateRangeGroup: this.fb.group({
         dateRange: [
           "",

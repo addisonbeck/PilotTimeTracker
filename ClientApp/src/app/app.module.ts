@@ -11,6 +11,8 @@ import { RequestGridComponent } from "./request-grid/request-grid.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "./material-module";
 import { RequestComponent } from "./request/request.component";
+import { ManagerQueueComponent } from "./manager-queue/manager-queue.component";
+import { RequestPreviewComponent } from './request-preview/request-preview.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { RequestComponent } from "./request/request.component";
     HomeComponent,
     RequestGridComponent,
     RequestComponent,
+    ManagerQueueComponent,
+    RequestPreviewComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
@@ -27,21 +31,19 @@ import { RequestComponent } from "./request/request.component";
     RouterModule.forRoot([
       { path: "", component: HomeComponent, pathMatch: "full" },
       {
-        path: "manager",
-        loadChildren: () =>
-          import("./manager-view/manager-view.module").then(
-            (m) => m.ManagerViewModule
-          ),
-      },
-      {
         path: "request",
         component: RequestComponent,
+      },
+      {
+        path: "manager-queue",
+        component: ManagerQueueComponent,
       },
     ]),
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
   ],
+  exports: [RequestGridComponent],
   providers: [],
   bootstrap: [AppComponent],
 })

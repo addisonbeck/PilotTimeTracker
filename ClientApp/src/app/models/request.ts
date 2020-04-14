@@ -1,11 +1,11 @@
 export interface Request {
   date: Date;
   hours: number;
-  requestGroupId: number;
+  requestGroupId: string;
 }
 
 export interface RequestGroup {
-  id: number;
+  id: string;
   dateRequested: Date;
   userId: number;
   managerId: number;

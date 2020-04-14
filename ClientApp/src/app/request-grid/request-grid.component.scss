@@ -1,61 +1,66 @@
-.mat-card {
-  font-size: 1.3rem;
-  font-weight: 100;
-  margin-bottom: 2rem;
+.mat-expansion-panel {
+  margin-bottom: 2rem !important;
   padding-bottom: 0.5rem;
   padding-top: 0.5rem;
-  display: grid;
-  grid-template-columns: 7% 30% 20% 1fr 1fr 1fr;
-  justify-items: start;
+}
+
+.mat-expansion-panel-header {
+  font-size: 1.3rem;
+  font-weight: 100;
+}
+
+.mat-expansion-panel-header > span {
+  margin-right: 100px;
+  justify-content: space-between !important;
   align-items: center;
+}
 
-  .icon {
-    .mat-icon {
-      font-size: 2em;
-      color: #ddd;
-    }
+.icon {
+  .mat-icon {
+    font-size: 2em;
+    color: #ddd;
   }
+}
 
-  .request-date {
-    .label {
-      font-weight: 700;
-      font-size: 0.6em;
-    }
-    .value {
-      color: #888;
-    }
+.request-date {
+  .label {
+    font-weight: 700;
+    font-size: 0.6em;
   }
+  .value {
+    color: #888;
+  }
+}
 
-  .date-requested {
-    .label {
-      font-size: 0.6em;
-      color: #777;
-    }
-    .value {
-      font-size: 0.7em;
-    }
+.date-requested {
+  .label {
+    font-size: 0.6em;
+    color: #777;
   }
+  .value {
+    font-size: 0.7em;
+  }
+}
 
-  .manager {
-    .label {
-      font-size: 0.6em;
-      color: #777;
-    }
-    .value {
-      font-size: 0.7em;
-      color: #aaa;
-    }
+.manager {
+  .label {
+    font-size: 0.6em;
+    color: #777;
   }
-  .hours {
-    .value {
-      color: #999;
-      font-size: 1.2em;
-      font-weight: 500;
-    }
+  .value {
+    font-size: 0.7em;
+    color: #aaa;
   }
-  .status {
-    .value {
-      font-size: 0.9em;
-    }
+}
+.hours {
+  .value {
+    color: #999;
+    font-size: 1.2em;
+    font-weight: 500;
+  }
+}
+.status {
+  .value {
+    font-size: 0.9em;
   }
 }

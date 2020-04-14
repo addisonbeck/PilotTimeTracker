@@ -34,6 +34,7 @@
               <mat-form-field class="request-day">
                 <input
                   matInput
+                  pattern="^\d$"
                   placeholder="{{
                     request.get('date').value | date: 'fullDate'
                   }}"
@@ -62,5 +63,4 @@
       </div>
     </mat-step>
   </mat-horizontal-stepper>
-  <button mat-button (click)="logForm()">Log Form</button>
 </div>
