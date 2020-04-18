@@ -1,0 +1,19 @@
+.request-days-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: start;
+  align-content: start;
+
+  .request-day {
+    padding: 1rem;
+  }
+}
+
+.managerView {
+  display: grid;
+  grid-template-rows: 1fr;
+  justify-content: end;
+  align-items: end;
+  align-content: end;
+}

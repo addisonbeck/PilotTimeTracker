@@ -3,5 +3,5 @@
     <a mat-raised-button href="/request">Submit Request</a>
     <hr />
   </div>
-  <app-request-grid [requestGroups]="requestGroups"></app-request-grid>
+  <app-request-grid [requestGroups]="requestGroups"  *ngIf="requestGroups"></app-request-grid>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { RequestGroup } from "src/app/models/request";
-import { mockUser } from "../dummy-data";
+import { RequestGroup } from "../models/request-group";
+import { AppService } from "../app.service";
 
 @Component({
   selector: "app-home",
@@ -10,8 +10,11 @@ import { mockUser } from "../dummy-data";
 export class HomeComponent implements OnInit {
   public requestGroups: RequestGroup[];
 
+  constructor(private appService: AppService) {}
+
   ngOnInit() {
-    this.requestGroups = mockUser.requestGroups;
-    console.log(this.requestGroups);
+    this.appService.getUser().subscribe((x) => {
+      this.requestGroups = x.requestGroups;
+    });
   }
 }

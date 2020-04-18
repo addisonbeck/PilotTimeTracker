@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewEncapsulation } from "@angular/core";
-import { RequestGroup } from "src/app/models/request";
+import { RequestGroup } from "../models/request-group";
+import { RequestStatus } from "../models/request-status.enum";
 
 @Component({
   selector: "app-request-grid",
@@ -10,18 +11,45 @@ import { RequestGroup } from "src/app/models/request";
 export class RequestGridComponent implements OnInit {
   @Input() requestGroups: RequestGroup[];
   @Input() managerView: boolean = false;
+  public statusTypes: RequestStatus;
+  public selectedStatusTypes: RequestStatus[];
+
+  get requestStatuses() {
+    return Object.keys(RequestStatus);
+  }
+
+  get shownRequests() {
+    if (!this.selectedStatusTypes) {
+      return this.sortedRequestGroups;
+    }
+
+    return this.sortedRequestGroups.filter(
+      (requestGroup) =>
+        this.selectedStatusTypes.indexOf(requestGroup.status) > -1
+    );
+  }
+
+  get sortedRequestGroups() {
+    return this.requestGroups.sort((a, b) => {
+      return <any>new Date(b.dateRequested) - <any>new Date(a.dateRequested);
+    });
+  }
+
+  public calculateRequestTotalHours(requestGroup: RequestGroup): number {
+    let total: number = 0;
+    requestGroup.requests.forEach(request => {total += request.hours})
+    return total;
+  }
 
   public calculateRequestedDate(requestGroup: RequestGroup): string {
     const dates = requestGroup.requests.map((x) => x.date).sort();
-    const start = dates[0];
-    const end = dates[dates.length - 1];
+    const start = new Date(dates[0]);
+    const end = new Date(dates[dates.length - 1]);
 
     return `${start.getMonth()}/${start.getDate()}/${start.getFullYear()}  -  ${end.getMonth()}/${end.getDate()}/${end.getFullYear()}`;
   }
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log("hedfadf");
-  }
+  ngOnInit(): void {}
 }

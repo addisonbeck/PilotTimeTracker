@@ -1,1 +1,31 @@
-<p>request-preview works!</p>
+<div class="request-days-container">
+  <div *ngFor="let request of sortedRequests">
+    <mat-form-field class="request-day">
+      <input
+        matInput
+        placeholder="{{ request.date | date: 'fullDate' }}"
+        disabled
+        [value]="request.hours"
+      />
+    </mat-form-field>
+  </div>
+</div>
+
+<div *ngIf="managerView" class="status-form">
+  <form [formGroup]="form" class="managerView" (ngSubmit)="onSubmit()">
+    <div class="status-dropdown">
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option
+            *ngFor="let requestStatus of requestStatuses"
+            [value]="requestStatus"
+          >
+            {{ requestStatus }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-button>Update Status</button>
+    </div>
+  </form>
+</div>

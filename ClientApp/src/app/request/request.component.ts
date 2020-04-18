@@ -5,12 +5,14 @@ import {
   FormGroup,
   ValidatorFn,
   ValidationErrors,
-  FormControl,
   FormArray,
 } from "@angular/forms";
 
-import { Request } from "src/app/models/request";
 import { Guid } from "guid-typescript";
+import { Request } from "../models/request";
+import { AppService } from "../app.service";
+import { RequestGroup } from "../models/request-group";
+import { RequestStatus } from "../models/request-status.enum";
 
 @Component({
   selector: "app-request",
@@ -66,6 +68,7 @@ export class RequestComponent implements OnInit {
     let i = 0;
     while (i < this.numberOfDays) {
       let request: Request = {
+        id: Guid.raw(),
         date: new Date(
           this.dateRange.value.begin.getTime() + 1000 * 60 * 60 * 24 * i
         ),
@@ -80,10 +83,6 @@ export class RequestComponent implements OnInit {
     }
 
     return requestGroups;
-  }
-
-  get jsonForm() {
-    return JSON.stringify(this.form.value, null, 2);
   }
 
   private maxTwoWeeks: ValidatorFn = (): ValidationErrors | null => {
@@ -104,11 +103,20 @@ export class RequestComponent implements OnInit {
     this.dateRange.patchValue(range);
   }
 
-  public logForm() {
-    console.log(this.form);
+  public onSubmit() {
+    const requestGroup: RequestGroup = {
+      id: this.requestGroupGuid,
+      dateRequested: new Date(),
+      userId: 90650,
+      managerId: 90593,
+      status: RequestStatus.Pending,
+      requests: this.form.value.requestsGroup.requests,
+    };
+
+    this.appService.postRequestGroup(requestGroup).subscribe();
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private appService: AppService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({

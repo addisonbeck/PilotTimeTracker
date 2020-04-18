@@ -1,9 +1,20 @@
+<mat-form-field>
+  <mat-label>Status</mat-label>
+  <mat-select multiple [(ngModel)]="selectedStatusTypes">
+    <mat-option
+      *ngFor="let requestStatus of requestStatuses"
+      [value]="requestStatus"
+    >
+      {{ requestStatus }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 <ng-container *ngIf="!managerView; else managerViewGrid">
-  <ng-container *ngFor="let requestGroup of requestGroups">
+  <ng-container *ngFor="let requestGroup of shownRequests">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <div class="icon">
-          <mat-icon aria-hidden="false" aria-label="airplane" [color]="primary"
+          <mat-icon aria-hidden="false" aria-label="airplane"
             >airplanemode_active</mat-icon
           >
         </div>
@@ -24,22 +35,22 @@
           <div class="value">{{ requestGroup.managerId }}</div>
         </div>
         <div class="hours">
-          <div class="value">{{ requestGroup.requests[0].hours }} hours</div>
+          <div class="value">{{ calculateRequestTotalHours(requestGroup) }} hours</div>
         </div>
         <div class="status">
           <div class="value">{{ requestGroup.status | lowercase }}</div>
         </div>
       </mat-expansion-panel-header>
-      <app-request-preview></app-request-preview>
+      <app-request-preview [requestGroup]="requestGroup"></app-request-preview>
     </mat-expansion-panel>
   </ng-container>
 </ng-container>
 <ng-template #managerViewGrid>
-  <ng-container *ngFor="let requestGroup of requestGroups">
+  <ng-container *ngFor="let requestGroup of shownRequests">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <div class="icon">
-          <mat-icon aria-hidden="false" aria-label="airplane" [color]="primary"
+          <mat-icon aria-hidden="false" aria-label="airplane"
             >priority_high</mat-icon
           >
         </div>
@@ -56,13 +67,16 @@
           </div>
         </div>
         <div class="hours">
-          <div class="value">{{ requestGroup.requests[0].hours }} hours</div>
+          <div class="value">{{ calculateRequestTotalHours(requestGroup) }} hours</div>
         </div>
         <div class="status">
           <div class="value">{{ requestGroup.status | lowercase }}</div>
         </div>
       </mat-expansion-panel-header>
-      <app-request-preview></app-request-preview>
+      <app-request-preview
+        [requestGroup]="requestGroup"
+        [managerView]="true"
+      ></app-request-preview>
     </mat-expansion-panel>
   </ng-container>
 </ng-template>

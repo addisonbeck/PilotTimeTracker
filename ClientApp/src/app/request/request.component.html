@@ -56,10 +56,11 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Review request</ng-template>
-      <pre>{{ jsonForm }}</pre>
       <div class="text-right">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Submit Request</button>
+        <button mat-button matStepperNext (click)="onSubmit()">
+          Submit Request
+        </button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>
