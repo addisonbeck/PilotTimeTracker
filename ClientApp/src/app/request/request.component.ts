@@ -127,7 +127,6 @@ export class RequestComponent implements OnInit {
     this.appService.postRequestGroup(requestGroup).subscribe(() => {
       this.snackbar.open("Request submitted", null, {
         duration: 2000,
-        direction: c
       });
       this.router.navigateByUrl("/");
     });
