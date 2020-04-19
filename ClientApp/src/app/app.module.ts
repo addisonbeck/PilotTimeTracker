@@ -15,6 +15,7 @@ import { ManagerQueueComponent } from "./manager-queue/manager-queue.component";
 import { RequestPreviewComponent } from './request-preview/request-preview.component';
 import { EnumToArrayPipe } from "./pipes/enum-to-array.pipe";
 import { SpacedStringPipe } from "./pipes/space-string.pipe";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SpacedStringPipe } from "./pipes/space-string.pipe";
     ManagerQueueComponent,
     RequestPreviewComponent,
     EnumToArrayPipe,
-    SpacedStringPipe
+    SpacedStringPipe,
+    FooterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),
