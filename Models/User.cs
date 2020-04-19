@@ -7,4 +7,6 @@ public class User {
   public string lastName {get;set;}
   public int managerId {get;set;}
   public User manager { get; set; }
+  public bool isManager { get; set; }
+  public string email { get; set; }
 }

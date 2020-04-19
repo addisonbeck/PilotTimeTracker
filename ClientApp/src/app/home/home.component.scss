@@ -6,6 +6,14 @@
   align-content: flex-start;
 }
 
-.header {
-  text-align: right;
+.header-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-content: space-between;
+}
+
+.submit-request{
+  align-self: center;
 }

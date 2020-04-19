@@ -2,14 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace PilotTimeTracker.Migrations
 {
     [DbContext(typeof(PtoContext))]
-    partial class PtoContextModelSnapshot : ModelSnapshot
+    [Migration("20200419205026_email")]
+    partial class email
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,9 +50,6 @@ namespace PilotTimeTracker.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("status")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("type")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("userId")

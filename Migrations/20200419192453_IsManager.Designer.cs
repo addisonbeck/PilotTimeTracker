@@ -2,14 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace PilotTimeTracker.Migrations
 {
     [DbContext(typeof(PtoContext))]
-    partial class PtoContextModelSnapshot : ModelSnapshot
+    [Migration("20200419192453_IsManager")]
+    partial class IsManager
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,9 +52,6 @@ namespace PilotTimeTracker.Migrations
                     b.Property<int>("status")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("type")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("userId")
                         .HasColumnType("INTEGER");
 
@@ -68,9 +67,6 @@ namespace PilotTimeTracker.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("email")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("firstName")
                         .HasColumnType("TEXT");
@@ -94,29 +90,26 @@ namespace PilotTimeTracker.Migrations
                         new
                         {
                             id = 90593,
-                            email = "jmforsyth@pilotcat.com",
                             firstName = "Joel",
-                            isManager = true,
+                            isManager = false,
                             lastName = "Forsyth",
                             managerId = 90593
                         },
                         new
                         {
                             id = 90650,
-                            email = "abbeck@pilotcat.com",
                             firstName = "Addison",
-                            isManager = true,
+                            isManager = false,
                             lastName = "Beck",
                             managerId = 90593
                         },
                         new
                         {
                             id = 90111,
-                            email = "bbaeck@pilotcat.com",
-                            firstName = "Baddison",
+                            firstName = "Braylon",
                             isManager = false,
-                            lastName = "Aeck",
-                            managerId = 90650
+                            lastName = "Tucker",
+                            managerId = 90593
                         });
                 });
 

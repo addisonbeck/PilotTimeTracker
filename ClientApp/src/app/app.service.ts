@@ -18,6 +18,10 @@ export class AppService {
     return this.http.get<User>("/api");
   }
 
+  getManagedRequests(): Observable<RequestGroup[]>{
+    return this.http.get<RequestGroup[]>("/api/managedRequests");
+  }
+
   postRequestGroup(requestGroup: RequestGroup) {
     return this.http.post<RequestGroup>(
       "/api",

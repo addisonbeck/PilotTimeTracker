@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PilotTimeTracker.Migrations
 {
     [DbContext(typeof(PtoContext))]
-    [Migration("20200418203547_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200419211952_requestype")]
+    partial class requestype
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,6 +52,9 @@ namespace PilotTimeTracker.Migrations
                     b.Property<int>("status")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("type")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("userId")
                         .HasColumnType("INTEGER");
 
@@ -68,8 +71,14 @@ namespace PilotTimeTracker.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("email")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("firstName")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("isManager")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("lastName")
                         .HasColumnType("TEXT");
@@ -82,6 +91,35 @@ namespace PilotTimeTracker.Migrations
                     b.HasIndex("managerId");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 90593,
+                            email = "jmforsyth@pilotcat.com",
+                            firstName = "Joel",
+                            isManager = true,
+                            lastName = "Forsyth",
+                            managerId = 90593
+                        },
+                        new
+                        {
+                            id = 90650,
+                            email = "abbeck@pilotcat.com",
+                            firstName = "Addison",
+                            isManager = true,
+                            lastName = "Beck",
+                            managerId = 90593
+                        },
+                        new
+                        {
+                            id = 90111,
+                            email = "bbaeck@pilotcat.com",
+                            firstName = "Baddison",
+                            isManager = false,
+                            lastName = "Aeck",
+                            managerId = 90650
+                        });
                 });
 
             modelBuilder.Entity("Request", b =>

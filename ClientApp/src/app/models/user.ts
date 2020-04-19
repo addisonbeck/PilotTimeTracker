@@ -5,5 +5,7 @@ export interface User {
   firstName: string;
   lastName: string;
   id: number;
-  manager: number;
+  managerId: number;
+  manager: User;
+  isManager: boolean;
 }

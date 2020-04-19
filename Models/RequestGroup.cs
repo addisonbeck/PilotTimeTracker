@@ -8,5 +8,6 @@ public class RequestGroup {
   public User user { get; set; }
   public int managerId {get;set;}
   public RequestStatus status {get;set;}
+  public RequestType type { get; set; }
   public List<Request> requests {get;set;}
 }

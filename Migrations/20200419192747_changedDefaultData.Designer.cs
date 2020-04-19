@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PilotTimeTracker.Migrations
 {
     [DbContext(typeof(PtoContext))]
-    [Migration("20200418204931_AddedUsers")]
-    partial class AddedUsers
+    [Migration("20200419192747_changedDefaultData")]
+    partial class changedDefaultData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,6 +71,9 @@ namespace PilotTimeTracker.Migrations
                     b.Property<string>("firstName")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("isManager")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("lastName")
                         .HasColumnType("TEXT");
 
@@ -88,6 +91,7 @@ namespace PilotTimeTracker.Migrations
                         {
                             id = 90593,
                             firstName = "Joel",
+                            isManager = true,
                             lastName = "Forsyth",
                             managerId = 90593
                         },
@@ -95,15 +99,17 @@ namespace PilotTimeTracker.Migrations
                         {
                             id = 90650,
                             firstName = "Addison",
+                            isManager = true,
                             lastName = "Beck",
                             managerId = 90593
                         },
                         new
                         {
                             id = 90111,
-                            firstName = "Braylon",
-                            lastName = "Tucker",
-                            managerId = 90593
+                            firstName = "Baddison",
+                            isManager = false,
+                            lastName = "Aeck",
+                            managerId = 90650
                         });
                 });
 

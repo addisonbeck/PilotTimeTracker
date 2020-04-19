@@ -13,6 +13,8 @@ import { MaterialModule } from "./material-module";
 import { RequestComponent } from "./request/request.component";
 import { ManagerQueueComponent } from "./manager-queue/manager-queue.component";
 import { RequestPreviewComponent } from './request-preview/request-preview.component';
+import { EnumToArrayPipe } from "./pipes/enum-to-array.pipe";
+import { SpacedStringPipe } from "./pipes/space-string.pipe";
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { RequestPreviewComponent } from './request-preview/request-preview.compo
     RequestComponent,
     ManagerQueueComponent,
     RequestPreviewComponent,
+    EnumToArrayPipe,
+    SpacedStringPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "ng-cli-universal" }),

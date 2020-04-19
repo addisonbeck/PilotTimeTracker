@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PilotTimeTracker.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,6 +68,21 @@ namespace PilotTimeTracker.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "id", "firstName", "lastName", "managerId" },
+                values: new object[] { 90593, "Joel", "Forsyth", 90593 });
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "id", "firstName", "lastName", "managerId" },
+                values: new object[] { 90650, "Addison", "Beck", 90593 });
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "id", "firstName", "lastName", "managerId" },
+                values: new object[] { 90111, "Braylon", "Tucker", 90593 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Request_requestGroupId",

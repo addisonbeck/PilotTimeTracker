@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewEncapsulation } from "@angular/core";
 import { RequestGroup } from "../models/request-group";
 import { RequestStatus } from "../models/request-status.enum";
+import { RequestType } from "../models/request-type.enum";
 
 @Component({
   selector: "app-request-grid",
@@ -14,12 +15,16 @@ export class RequestGridComponent implements OnInit {
   public statusTypes: RequestStatus;
   public selectedStatusTypes: RequestStatus[];
 
-  get requestStatuses() {
-    return Object.keys(RequestStatus);
+  get requestStatus() {
+    return RequestStatus;
+  }
+
+  get requestTypes() {
+    return RequestType;
   }
 
   get shownRequests() {
-    if (!this.selectedStatusTypes) {
+    if (!this.selectedStatusTypes || this.selectedStatusTypes.length < 1) {
       return this.sortedRequestGroups;
     }
 

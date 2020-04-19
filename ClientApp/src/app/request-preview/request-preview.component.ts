@@ -15,7 +15,7 @@ export class RequestPreviewComponent implements OnInit {
   public form: FormGroup;
 
   get requestStatuses() {
-    return Object.values(RequestStatus);
+    return RequestStatus;
   }
 
   get sortedRequests() {

@@ -2,10 +2,10 @@
   <mat-label>Status</mat-label>
   <mat-select multiple [(ngModel)]="selectedStatusTypes">
     <mat-option
-      *ngFor="let requestStatus of requestStatuses"
-      [value]="requestStatus"
+      *ngFor="let requestStatus of requestStatus | enumToArray"
+      [value]="requestStatus.index"
     >
-      {{ requestStatus }}
+      {{ requestStatus.name }}
     </mat-option>
   </mat-select>
 </mat-form-field>
@@ -20,9 +20,9 @@
         </div>
         <div class="request-date">
           <div class="value">
-            {{ requestGroup.requests[0].date | date: "fullDate" }}
+            Week of {{ requestGroup.requests[0].date | date }}
           </div>
-          <div class="label">PTO</div>
+          <div class="label">{{ requestTypes[requestGroup.type] | spaced }}</div>
         </div>
         <div class="date-requested">
           <div class="label">Date Requested</div>
@@ -38,7 +38,7 @@
           <div class="value">{{ calculateRequestTotalHours(requestGroup) }} hours</div>
         </div>
         <div class="status">
-          <div class="value">{{ requestGroup.status | lowercase }}</div>
+          <div class="value">{{ requestStatus[requestGroup.status] | lowercase }}</div>
         </div>
       </mat-expansion-panel-header>
       <app-request-preview [requestGroup]="requestGroup"></app-request-preview>
@@ -58,7 +58,7 @@
           <div class="value">
             {{ requestGroup.userId }}
           </div>
-          <div class="label">John Doe</div>
+          <div class="label">{{ requestGroup.user.firstName }} {{requestGroup.user.lastName}}</div>
         </div>
         <div class="date-requested">
           <div class="label">Requested Days</div>
@@ -69,8 +69,11 @@
         <div class="hours">
           <div class="value">{{ calculateRequestTotalHours(requestGroup) }} hours</div>
         </div>
-        <div class="status">
-          <div class="value">{{ requestGroup.status | lowercase }}</div>
+        <div class="request-date">
+          <div class="value">
+            {{ requestStatus[requestGroup.status] | lowercase }}
+          </div>
+          <div class="label">{{ requestTypes[requestGroup.type] | spaced }}</div>
         </div>
       </mat-expansion-panel-header>
       <app-request-preview

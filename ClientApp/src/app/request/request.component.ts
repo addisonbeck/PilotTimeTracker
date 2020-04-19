@@ -13,6 +13,9 @@ import { Request } from "../models/request";
 import { AppService } from "../app.service";
 import { RequestGroup } from "../models/request-group";
 import { RequestStatus } from "../models/request-status.enum";
+import { User } from "../models/user";
+import { ThrowStmt } from "@angular/compiler";
+import { RequestType } from "../models/request-type.enum";
 
 @Component({
   selector: "app-request",
@@ -20,9 +23,14 @@ import { RequestStatus } from "../models/request-status.enum";
   styleUrls: ["./request.component.scss"],
 })
 export class RequestComponent implements OnInit {
+  user: User;
   form: FormGroup;
   dateFilter = (date: Date) => date.getDay() == 0;
   private requestGroupGuid: string = Guid.raw();
+
+  get requestTypes() {
+    return RequestType;
+  }
 
   get dateRangeGroup() {
     return this.form.get("dateRangeGroup");
@@ -107,10 +115,11 @@ export class RequestComponent implements OnInit {
     const requestGroup: RequestGroup = {
       id: this.requestGroupGuid,
       dateRequested: new Date(),
-      userId: 90650,
-      managerId: 90593,
+      userId: this.user.id,
+      managerId: this.user.managerId,
       status: RequestStatus.Pending,
       requests: this.form.value.requestsGroup.requests,
+      type: this.form.value.dateRangeGroup.type
     };
 
     this.appService.postRequestGroup(requestGroup).subscribe();
@@ -119,6 +128,10 @@ export class RequestComponent implements OnInit {
   constructor(private fb: FormBuilder, private appService: AppService) {}
 
   ngOnInit(): void {
+    this.appService.getUser().subscribe(user => {
+      this.user = user;
+    });
+
     this.form = this.fb.group({
       id: this.requestGroupGuid,
       dateRangeGroup: this.fb.group({
@@ -126,6 +139,7 @@ export class RequestComponent implements OnInit {
           "",
           [Validators.required, this.maxTwoWeeks, this.minOneWeek],
         ],
+        type: [RequestType.Personal]
       }),
       requestsGroup: this.fb.group({
         requests: this.fb.array([], { validators: [this.atLeastOneRequired] }),

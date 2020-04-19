@@ -1,7 +1,17 @@
-<div class="home">
+<div class="home" *ngIf="user">
   <div class="header">
-    <a mat-raised-button href="/request">Submit Request</a>
+    <div class="header-content">
+      <div>
+        <h2>Welcome, {{user.firstName}}</h2>
+        <h4>Manager: {{user.manager.firstName}} {{user.manager.lastName}}</h4>
+      </div>
+      <div class="submit-request">
+        <a mat-raised-button href="/request">Submit Request</a>
+      </div>
+    </div>
     <hr />
   </div>
-  <app-request-grid [requestGroups]="requestGroups"  *ngIf="requestGroups"></app-request-grid>
+  <div>
+    <app-request-grid [requestGroups]="user.requestGroups"  *ngIf="user.requestGroups"></app-request-grid>
+  </div>
 </div>

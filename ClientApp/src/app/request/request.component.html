@@ -1,25 +1,40 @@
-<div class="app-container" [formGroup]="form">
+<div class="app-container" [formGroup]="form" *ngIf="user">
   <mat-horizontal-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="dateRangeGroup">
       <form [formGroup]="dateRangeGroup">
         <ng-template matStepLabel>Select a date range</ng-template>
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Choose a date range"
-            [satDatepicker]="picker"
-            [matDatepickerFilter]="dateFilter"
-            formControlName="dateRange"
-          />
-          <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
-          <sat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></sat-datepicker-toggle>
-          <mat-error *ngIf="dateRange.errors">{{
-            dateRangeErrorMessage
-          }}</mat-error>
-        </mat-form-field>
+        <div>
+          <mat-form-field>
+            <mat-label>Request Type</mat-label>
+            <mat-select formControlName="type">
+              <mat-option
+                *ngFor="let requestType of requestTypes | enumToArray"
+                [value]="requestType.index"
+              >
+                {{ requestType.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Choose a date range"
+              [satDatepicker]="picker"
+              [matDatepickerFilter]="dateFilter"
+              formControlName="dateRange"
+            />
+            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+            <sat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></sat-datepicker-toggle>
+            <mat-error *ngIf="dateRange.errors">{{
+              dateRangeErrorMessage
+            }}</mat-error>
+          </mat-form-field>
+        </div>
         <div class="text-right">
           <button mat-button matStepperNext>Next</button>
         </div>

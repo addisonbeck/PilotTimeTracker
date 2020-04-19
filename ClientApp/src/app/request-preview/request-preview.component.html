@@ -18,10 +18,10 @@
         <mat-label>Status</mat-label>
         <mat-select formControlName="status">
           <mat-option
-            *ngFor="let requestStatus of requestStatuses"
-            [value]="requestStatus"
+            *ngFor="let requestStatus of requestStatuses | enumToArray"
+            [value]="requestStatus.index"
           >
-            {{ requestStatus }}
+            {{ requestStatus.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>

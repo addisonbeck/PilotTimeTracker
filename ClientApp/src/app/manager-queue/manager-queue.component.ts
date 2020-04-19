@@ -13,8 +13,8 @@ export class ManagerQueueComponent implements OnInit {
   constructor(private appService: AppService) {}
 
   ngOnInit() {
-    this.appService.getUser().subscribe((x) => {
-      this.requestGroups = x.requestGroups;
+    this.appService.getManagedRequests().subscribe((x) => {
+      this.requestGroups = x;
     });
   }
 }

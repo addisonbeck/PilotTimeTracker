@@ -20,8 +20,10 @@ public class PtoContext : DbContext
             .HasOne(p => p.requestGroup)
             .WithMany(b => b.requests);
         
-        modelBuilder.Entity<User>().HasData(new User {id = 90593, firstName = "Joel", lastName = "Forsyth", managerId = 90593});
-        modelBuilder.Entity<User>().HasData(new User {id = 90650, firstName = "Addison", lastName = "Beck", managerId = 90593});
-        modelBuilder.Entity<User>().HasData(new User {id = 90111, firstName = "Braylon", lastName = "Tucker", managerId = 90593});
+        modelBuilder.Entity<User>().HasOne(p => p.manager);
+
+        modelBuilder.Entity<User>().HasData(new User {id = 90593, firstName = "Joel", lastName = "Forsyth", managerId = 90593, isManager = true, email = "jmforsyth@pilotcat.com"});
+        modelBuilder.Entity<User>().HasData(new User {id = 90650, firstName = "Addison", lastName = "Beck", managerId = 90593, isManager = true, email = "abbeck@pilotcat.com"});
+        modelBuilder.Entity<User>().HasData(new User {id = 90111, firstName = "Baddison", lastName = "Aeck", managerId = 90650, isManager = false, email = "bbaeck@pilotcat.com"});
     }
 }

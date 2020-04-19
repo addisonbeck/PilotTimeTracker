@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace PilotTimeTracker.Controllers
 {
@@ -13,20 +13,31 @@ namespace PilotTimeTracker.Controllers
     {
 
         [HttpGet]
-        public User Get()
+        public User GetUser()
         {
             using (var db = new PtoContext()){
-                return db.User.Include(x => x.requestGroups).ThenInclude(x => x.requests).FirstOrDefault(x => x.id == 90650);                
+                return db.User.Include(x => x.manager).Include(x => x.requestGroups).ThenInclude(x => x.requests).FirstOrDefault(x => x.id == 90650);                
+            }
+        }
+
+        [HttpGet]
+        [Route("managedRequests")]
+        public List<RequestGroup> GetManagedRequests(){
+            using (var db = new PtoContext()){
+                return db.RequestGroup.Include(x => x.user).Include(x => x.requests).Where(x => x.managerId == 90650).ToList();
             }
         }
 
         [HttpPost]
         public RequestGroup Post(RequestGroup requestGroup){
+
             using (var db = new PtoContext()){
                 var user = db.User.FirstOrDefault(x => x.id == requestGroup.userId);
                 requestGroup.user = user;
                 db.Add(requestGroup);
                 db.SaveChanges();
+                //sendNewRequestEmail(user);
+
             }
             return requestGroup;
         }
@@ -37,64 +48,51 @@ namespace PilotTimeTracker.Controllers
                 var entity = db.RequestGroup.FirstOrDefault(x => x.id == requestGroup.id);
                 if(entity != null){
                     entity.status = requestGroup.status;
-                    db.RequestGroup.Update(requestGroup);
                     db.SaveChanges();
+                    //sendUpdatedRequestEmail(db.User.FirstOrDefault(x => x.id == 90650));
                 }
             }
             return requestGroup;
         }
 
-        public static User mockUser = new User{
-            id = 1,
-            managerId = 2,
-            firstName = "Addison",
-            lastName = "Beck",
-            requestGroups = new List<RequestGroup>(
-                new RequestGroup[]
+        private void sendNewRequestEmail(User user){
+            var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("PTO System", "pto@pilotcat.com"));
+                message.To.Add(new MailboxAddress($"{user.firstName} {user.lastName}", user.email));
+                message.Subject = "A PTO Request Needs Your Attention";
+                message.Body = new TextPart("plain")
                 {
-                    new RequestGroup{
-                        id = "1",
-                        dateRequested = DateTime.Now,
-                        status = RequestStatus.Pending,
-                        userId = 1,
-                        managerId = 2,
-                        requests = new List<Request>(
-                            new Request[]{
-                                new Request() {
-                                    date = DateTime.Now,
-                                    hours = 4,
-                                    requestGroupId = "1",
-                                },
-                                new Request() {
-                                    date = DateTime.Now,
-                                    hours = 2,
-                                    requestGroupId = "1"
-                                }
-                            }
-                        )
-                    },
-                    new RequestGroup{
-                        id = "2",
-                        dateRequested = DateTime.Now,
-                        status = RequestStatus.Pending,
-                        userId = 1,
-                        managerId = 2,
-                        requests = new List<Request>(
-                            new Request[]{
-                                new Request() {
-                                    date = DateTime.Now,
-                                    hours = 8,
-                                    requestGroupId = "2",
-                                },
-                                new Request() {
-                                    date = DateTime.Now,
-                                    hours = 8,
-                                    requestGroupId = "2"
-                                }
-                            }
-                        )
-                    }
-                })
-        };
+                    Text = "A new PTO request has been created by someone you manage"
+                };
+
+            using (var client = new MailKit.Net.Smtp.SmtpClient()) {
+                client.Connect("smtp.gmail.com", 587, false);
+
+                //SMTP server authentication if needed
+                client.Authenticate("xxxx@gmail.com", "xxxxx");
+                client.Send(message);
+                client.Disconnect(true);
+            }
+        }
+
+        private void sendUpdatedRequestEmail(User user){
+            var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("PTO System", "pto@pilotcat.com"));
+                message.To.Add(new MailboxAddress($"{user.firstName} {user.lastName}", user.email));
+                message.Subject = "PTO Request Update";
+                message.Body = new TextPart("plain")
+                {
+                    Text = "The status on one of your PTO requests has been updated"
+                };
+
+            using (var client = new MailKit.Net.Smtp.SmtpClient()) {
+                client.Connect("smtp.gmail.com", 587, false);
+
+                //SMTP server authentication if needed
+                client.Authenticate("xxxx@gmail.com", "xxxxx");
+                client.Send(message);
+                client.Disconnect(true);
+            }
+        }
     }
 }
