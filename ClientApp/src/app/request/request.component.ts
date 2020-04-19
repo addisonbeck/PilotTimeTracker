@@ -16,6 +16,8 @@ import { RequestStatus } from "../models/request-status.enum";
 import { User } from "../models/user";
 import { ThrowStmt } from "@angular/compiler";
 import { RequestType } from "../models/request-type.enum";
+import { Router } from "@angular/router";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-request",
@@ -122,10 +124,16 @@ export class RequestComponent implements OnInit {
       type: this.form.value.dateRangeGroup.type
     };
 
-    this.appService.postRequestGroup(requestGroup).subscribe();
+    this.appService.postRequestGroup(requestGroup).subscribe(() => {
+      this.snackbar.open("Request submitted", null, {
+        duration: 2000,
+        direction: c
+      });
+      this.router.navigateByUrl("/");
+    });
   }
 
-  constructor(private fb: FormBuilder, private appService: AppService) {}
+  constructor(private fb: FormBuilder, private appService: AppService, private router: Router, private snackbar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.appService.getUser().subscribe(user => {

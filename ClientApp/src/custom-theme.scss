@@ -1,33 +1,108 @@
-@import "~saturn-datepicker/theming";
+@import '~@angular/material/theming';
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@import "~@angular/material/theming";
-// Plus imports for other components in your app.
+$white: #ffffff;
+$black: #000000;
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
+$base-text-color: $black;
+$invert-text-color: $white;
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$PilotTimeTracker-primary: mat-palette($mat-indigo);
-$PilotTimeTracker-accent: mat-palette($mat-pink, A200, A100, A400);
+/*
+  Palete colors set up for stackability and are ranked in priority from 0-4
+  0 is the primary color for each section, 4 should be the most rarely used if used at all
+*/
 
-// The warn palette is optional (defaults to red).
-$PilotTimeTracker-warn: mat-palette($mat-red);
+//background
+$bg-0: rgb(245, 245, 245); //main body
+$bg-1: rgb(255, 255, 255); //first layer base controls (cards, grids, etc.)
+$bg-2: rgb(190, 190, 190);
+$bg-3: rgb(216, 216, 216);
+$bg-4: rgb(196, 196, 196);
 
-// Create the theme object (a Sass map containing all of the palettes).
-$PilotTimeTracker-theme: mat-light-theme(
-  $PilotTimeTracker-primary,
-  $PilotTimeTracker-accent,
-  $PilotTimeTracker-warn
+//foreground
+$fg-0: rgb( 35, 31, 32); //web:sidenav, mobile: header
+$fg-1: rgb( 143, 126, 130);
+$fg-2: rgb( 94, 83, 86);
+$fg-3: rgb( 28, 18, 20);
+$fg-4: rgb( 29, 12, 16);
+
+//primary accents
+$ac-primary-0: rgb(111, 1, 1); //main primary action link
+$ac-primary-1: rgb(148, 56, 56);
+$ac-primary-2: rgb(149, 24, 24);
+$ac-primary-3: rgb(73, 0, 0);
+$ac-primary-4: rgb(38, 0, 0);
+
+//attention accents
+$ac-attention-0: rgb(13, 31, 70); //main accent color and attenion color
+$ac-attention-1: rgb(60, 81, 126);
+$ac-attention-2: rgb(32, 53, 98);
+$ac-attention-3: rgb(4, 17, 45);
+$ac-attention-4: rgb(1, 8, 23);
+
+//success accents
+$ac-success-0: rgb(51, 51, 153);
+$ac-success-1: rgb(114, 114, 192);
+$ac-success-2: rgb(76, 76, 167);
+$ac-success-3: rgb(76, 76, 167);
+$ac-success-4: rgb(15, 15, 99);
+
+
+//error accents
+$ac-error-0: rgb(255, 33, 33);
+$ac-error-1: rgb(255, 141, 141);
+$ac-error-2: rgb(255, 48, 48);
+$ac-error-3: rgb(255, 0, 0);
+$ac-error-4: rgb(255, 0, 0);
+
+//material themeing
+$mat-primary: (
+  50:   $ac-primary-0,
+  100:  $ac-primary-1,
+  200:  $ac-primary-2,
+  300:  $ac-primary-3,
+  400:  $ac-primary-4,
+  contrast: (
+    50: $invert-text-color,
+    100: $invert-text-color,
+    200: $invert-text-color,
+    300: $invert-text-color,
+    400: $invert-text-color,
+  )
 );
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($PilotTimeTracker-theme);
-@include sat-datepicker-theme($PilotTimeTracker-theme);
+$mat-accent: (
+  50:   $ac-attention-0,
+  100:  $ac-attention-1,
+  200:  $ac-attention-2,
+  300:  $ac-attention-3,
+  400:  $ac-attention-4,
+  contrast: (
+    50: $invert-text-color,
+    100: $invert-text-color,
+    200: $invert-text-color,
+    300: $invert-text-color,
+    400: $invert-text-color,
+  )
+);
+
+$mat-error: (
+  50:   $ac-error-0,
+  100:  $ac-error-1,
+  200:  $ac-error-2,
+  300:  $ac-error-3,
+  400:  $ac-error-4,
+  contrast: (
+    50: $invert-text-color,
+    100: $base-text-color,
+    200: $invert-text-color,
+    300: $invert-text-color,
+    400: $invert-text-color,
+  )
+);
+
+@include mat-core();
+$mat-theme-primary: mat-palette($mat-primary, 50, 300, 400);
+$mat-theme-accent: mat-palette($mat-accent, 50, 200, 300);
+$mat-theme-error: mat-palette($mat-error);
+$pilot-app-light-theme: mat-light-theme($mat-theme-primary, $mat-theme-accent, $mat-theme-error);
+@include angular-material-theme($pilot-app-light-theme);

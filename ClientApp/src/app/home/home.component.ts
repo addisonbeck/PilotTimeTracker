@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { RequestGroup } from "../models/request-group";
 import { AppService } from "../app.service";
 import { User } from "../models/user";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-home",
