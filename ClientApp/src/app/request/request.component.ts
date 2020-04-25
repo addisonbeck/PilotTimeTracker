@@ -6,6 +6,7 @@ import {
   ValidatorFn,
   ValidationErrors,
   FormArray,
+  FormControl,
 } from "@angular/forms";
 
 import { Guid } from "guid-typescript";
@@ -86,7 +87,13 @@ export class RequestComponent implements OnInit {
         requestGroupId: this.requestGroupGuid,
       };
 
-      const group = this.fb.group(request);
+      const group = this.fb.group({
+        id: [request.id],
+        date: [request.date],
+        hours: [request.hours, [Validators.required]],
+        requestGroupId: [request.requestGroupId]
+      }, [Validators.required]);
+
       requestGroups.push(group);
 
       i++;
@@ -114,22 +121,24 @@ export class RequestComponent implements OnInit {
   }
 
   public onSubmit() {
-    const requestGroup: RequestGroup = {
-      id: this.requestGroupGuid,
-      dateRequested: new Date(),
-      userId: this.user.id,
-      managerId: this.user.managerId,
-      status: RequestStatus.Pending,
-      requests: this.form.value.requestsGroup.requests,
-      type: this.form.value.dateRangeGroup.type
-    };
+    if(this.form.valid){
+      const requestGroup: RequestGroup = {
+        id: this.requestGroupGuid,
+        dateRequested: new Date(),
+        userId: this.user.id,
+        managerId: this.user.managerId,
+        status: RequestStatus.Pending,
+        requests: this.form.value.requestsGroup.requests,
+        type: this.form.value.dateRangeGroup.type
+      };
 
-    this.appService.postRequestGroup(requestGroup).subscribe(() => {
-      this.snackbar.open("Request submitted", null, {
-        duration: 2000,
+      this.appService.postRequestGroup(requestGroup).subscribe(() => {
+        this.snackbar.open("Request submitted", null, {
+          duration: 2000,
+        });
+        this.router.navigateByUrl("/");
       });
-      this.router.navigateByUrl("/");
-    });
+    }
   }
 
   constructor(private fb: FormBuilder, private appService: AppService, private router: Router, private snackbar: MatSnackBar) {}

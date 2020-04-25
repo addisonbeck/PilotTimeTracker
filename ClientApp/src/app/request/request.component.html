@@ -48,6 +48,7 @@
             <div [formGroupName]="i">
               <mat-form-field class="request-day">
                 <input
+                  required
                   matInput
                   pattern="^\d$"
                   placeholder="{{
@@ -55,13 +56,16 @@
                   }}"
                   formControlName="hours"
                 />
+                <mat-error *ngIf="request.invalid">Please enter a number</mat-error>
               </mat-form-field>
             </div>
           </div>
+        </div>
+        <div class="global-error">
           <mat-error
-            *ngIf="requests.touched && requests.errors?.atLeastOneRequired"
-            >At least one required</mat-error
-          >
+          *ngIf="requests.touched && requests.errors?.atLeastOneRequired"
+          >At least one day must have requested hours</mat-error
+        >
         </div>
         <div class="text-right">
           <button mat-button matStepperPrevious>Back</button>
